@@ -4,7 +4,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-Timestamp=$(date +%F-H%-%M-%S)
+Timestamp=$(date +%F-%H-%M-%S)
 LogFile="/temp/$0-$Timestamp.log"
 
 echo "script started execting at $Timestamp" &>> $LogFile
