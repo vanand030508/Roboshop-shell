@@ -7,7 +7,7 @@ N="\e[0m"
 Timestamp=$(date +%F-%H-%M-%S)
 LOGFILE="/temp/$0-$Timestamp.log"
 
-echo "script started execting at $Timestamp" &>> $LOGFILE
+echo "script started execting at $Timestamp" &>>$LOGFILE
 
 VALIDATE(){
     if [$1 -ne 0]
@@ -25,10 +25,10 @@ else
     echo -e "$G You are root user"
 fi
 
-cp Mongo.repo /etc/yum.repos.d/Mongo.repo &>> $LOGFILE
+cp Mongo.repo /etc/yum.repos.d/Mongo.repo &>>$LOGFILE
 
 VALIDATE $? "copied mongoDB Repo"
 
-yum install mongodb-org -y &>> $LOGFILE
+yum install mongodb-org -y &>>$LOGFILE
 
 VALIDATE $? "installing mongo db"
