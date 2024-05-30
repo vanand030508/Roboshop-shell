@@ -6,31 +6,33 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-Timestamp=$(date +%F-%H-%M-%S)
-LOGFILE="/temp/$0-$Timestamp.log"
+TIMESTAMP=$(date +%F-%H-%M-%S)
+LOGFILE="/tmp/$0-$TIMESTAMP.log"
 
-echo "script started execting at $Timestamp" &>>$LOGFILE
+echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
 VALIDATE(){
-    if [$1 -ne 0]
+    if [ $1 -ne 0 ]
     then
-        echo -e "$2 ... $R Failure $N"
+        echo -e "$2 ... $R FAILED $N"
+        exit 1
     else
-        echo -e "$2 ... $G success $N"
+        echo -e "$2 ... $G SUCCESS $N"
     fi
 }
 
-if [$ID -ne 0]
+if [ $ID -ne 0 ]
 then
-    echo -e "$R Error : Please run this script with root access"
+    echo -e "$R ERROR:: Please run this script with root access $N"
+    exit 1 # you can give other than 0
 else
-    echo -e "$G You are root user"
-fi
+    echo "You are root user"
+fi # fi means reverse of if, indicating condition end
 
-cp Mongo.repo /etc/yum.repos.d/Mongo.repo &>>$LOGFILE
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 
-VALIDATE $? "copied mongoDB Repo"
+VALIDATE $? "Copied MongoDB Repo"
 
-yum install mongodb-org -y &>>$LOGFILE
+dnf install mongodb-org -y &>> $LOGFILE
 
-VALIDATE $? "installing mongo db"
+VALIDATE $? "Installing MongoDB"
